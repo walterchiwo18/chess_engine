@@ -7,10 +7,20 @@ data Piece = Piece PColor PType deriving (Show)
 data PColor = Black | White deriving (Show)
 data PType = Pawn | Rook | Knight | Bishop | Queen | King deriving (Show)
 
-readSquareChar :: Square -> Char
-readSquareChar Nothing = " "
-readSquareChar (Just piece) = pieceToChar piece
+-- Initial readSquareChar
+-- readSquareChar :: Square -> Char
+-- readSquareChar Nothing = " "
+-- readSquareChar (Just piece) = pieceToChar piece
 
+-- Refactor Rationale
+-- :t maybe:: b -> (a -> b) -> Maybe a -> b
+-- :t maybe:: b -> (a -> b) -> :t readSquare Maybe Piece -> Char
+-- :t maybe:: b -> (Piece -> Char) -> :t readSquare Maybe Piece -> Char
+-- :t maybe:: " " -> pieceToChar :t readSquare Maybe Piece -> Char
+
+-- refactored readSquareChar
+readSquareChar :: Square -> Char
+readSquareChar = maybe ' ' pieceToChar
 
 pieceToChar :: Piece -> Char
 pieceToChar (Piece Black King) = 'K'
